@@ -3,42 +3,43 @@
 {% block title %}Nowy przepis{% endblock %}
 
 {% block content %}
-<div class="dashboard-content border-dashed p-3 m-4 view-height">
-
+    <div class="dashboard-content border-dashed p-3 m-4 view-height">
     <div class="mt-4 ml-4 mr-4">
         <div class="row border-bottom border-3">
             <div class="col"><h3 class="color-header text-uppercase">Nowy
                 przepis</h3></div>
+            {% if wrong_data %}
+            <div class="col"><h3 class="color-header text-uppercase">
+                Wpisz poprawne dane!
+            </h3></div>
+            {% endif %}
             <div class="col d-flex justify-content-end mb-2">
+                <form action="" method="post" id="AddRecipe"> {% csrf_token %}
                 <button type="submit"
                         class="btn btn-color rounded-0 pt-0 pb-0 pr-4 pl-4">
                     Zapisz
                 </button>
+                </form>
             </div>
         </div>
-
         <table class="table borderless">
             <tbody>
             <tr class="d-flex">
-                <th scope="row" class="col-2">Nazwa Przepisu</th>
+                <th scope="row" class="col-2">
+                    Nazwa Przepisu
+                </th>
                 <td class="col-7">
-                    <input class="w-100 p-1" value="">
+                    <input class="w-100 p-1" value="" name="name" form="AddRecipe">
                 </td>
             </tr>
             <tr class="d-flex">
-                <th scope="row" class="col-2">Opis przepisu</th>
-                <td class="col-7"><textarea class="w-100 p-1"
-                                            rows="5"></textarea></td>
-            </tr>
-            <tr class="d-flex">
-                <th scope="row" class="col-2">Przygotowani(minuty)</th>
+                <th scope="row" class="col-2">Przygotowanie(minuty)</th>
                 <td class="col-3">
-                    <input class="p-1" type="number" value="">
+                    <input class="p-1" type="number" value="" min="0" name="preparation_time" form="AddRecipe">
                 </td>
             </tr>
             </tbody>
         </table>
-
         <div class="row d-flex">
             <div class="col-5 border-bottom border-3"><h3
                     class="text-uppercase">Sposób przygotowania</h3></div>
@@ -48,12 +49,11 @@
         </div>
         <div class="row d-flex">
             <div class="col-5 p-4">
-                <textarea class="w-100 p-1" rows="10"></textarea>
+                <textarea class="w-100 p-1" rows="10" name="description" form="AddRecipe"></textarea>
             </div>
             <div class="col-2"></div>
-
             <div class="col-5 p-4">
-                <textarea class="w-100 p-1" rows="10"></textarea>
+                <textarea class="w-100 p-1" rows="10" name="ingredients" form="AddRecipe"></textarea>
             </div>
         </div>
     </div>
