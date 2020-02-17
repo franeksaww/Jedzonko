@@ -21,45 +21,51 @@
         </tr>
         </thead>
         <tbody class="text-color-lighter">
+        {% for recipe in recipes%}
         <tr class="d-flex">
-            <th scope="row" class="col-1">1</th>
+            <th scope="row" class="col-1">
+            {% load mathfilters %}
+                {% with num=recipes.number|sub:1 %}
+                    {% with num2=num|mul:50%}
+                        {% with number=forloop.counter|add:num2%}
+                            {{ number }}
+                        {% endwith %}
+                    {% endwith %}
+                {% endwith %}
+            </th>
             <td class="col-2">
-                Zapiekanka z ziemniakami i brukselką (44 głosy)
+                {{ recipe.name }} ( {{ recipe.votes }} )
             </td>
-            <td clas="col-7">Mamusina najlepsza zapiekanka pod słońcem. Można ją
-                podać jako główne danie albo jako kolację. W zapiekance możesz
-                użyć również kiełbasy paprykowej sprawi ona, że zapiekanka
-                będzie ostrzejsza w smaku. Zgodnie z zalecanimi Makłowicza,
-                podawać z dobrze dobranym winkiem ;)
+            <td clas="col-7">{{ recipe.description }}
             </td>
             <td class="col-2 d-flex align-items-center justify-content-center flex-wrap">
                 <a href="#"
                    class="btn btn-danger rounded-0 text-light m-1">Usuń</a>
-                <a href="/app-recipe-details.html"
+                <a href="/recipe/{{ recipe.id }}/"
                    class="btn btn-info rounded-0 text-light m-1">Szczegóły</a>
                 <a href="/app-edit-recipe.html"
                    class="btn btn-warning rounded-0 text-light m-1">Edytuj</a>
             </td>
         </tr>
-        <tr class="d-flex">
-            <th scope="row" class="col-1">2</th>
-            <td class="col-2">
-                Zapiekanka z ziemniakami i brukselką (44 głosy)
-            </td>
-            <td clas="col-7">Mamusina najlepsza zapiekanka pod słońcem. Można ją
-                podać jako główne danie albo jako kolację. W zapiekance możesz
-                użyć również kiełbasy paprykowej sprawi ona, że zapiekanka
-                będzie ostrzejsza w smaku. Zgodnie z zalecanimi Makłowicza,
-                podawać z dobrze dobranym winkiem ;)
-            </td>
-            <td class="col-2 d-flex align-items-center justify-content-center flex-wrap">
-                <a href="#"
-                   class="btn btn-danger rounded-0 text-light m-1">Usuń</a>
-                <a href="/app-recipe-details.html"
-                   class="btn btn-info rounded-0 text-light m-1">Szczegóły</a>
-                <a href="/app-edit-recipe.html"
-                   class="btn btn-warning rounded-0 text-light m-1">Edytuj</a>
-            </td>
+        {% endfor %}
+        <tr><td>
+            <div class="pagination">
+                <span class="step-links">
+                {% if recipes.has_previous %}
+                    <a href="?page=1">&laquo; Pierwsza</a>
+                    <a href="?page={{ recipes.previous_page_number }}">Poprzednia</a>
+                {% endif %}
+
+            <span class="current">
+                Strona {{ recipes.number }} z {{ recipes.paginator.num_pages }}.
+                </span>
+
+                {% if recipes.has_next %}
+                    <a href="?page={{ recipes.next_page_number }}">Następna</a>
+                    <a href="?page={{ recipes.paginator.num_pages }}">Ostatnia &raquo;</a>
+                {% endif %}
+                </span>
+            </div></td>
         </tr>
         </tbody>
     </table>
