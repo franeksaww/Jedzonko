@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
+
 class Recipe(models.Model):
     name = models.CharField(max_length=255)
     ingredients = models.TextField()
@@ -17,6 +18,7 @@ class Plan(models.Model):
     created = models.DateTimeField(default=timezone.now)
     recipes = models.ManyToManyField(Recipe,through="RecipePlan")
 
+    
 class Dayname(models.Model):
     DAYS_OF_WEEK = (
         (0, 'Monday'),
@@ -30,6 +32,7 @@ class Dayname(models.Model):
     name = models.CharField(max_length=16,choices=DAYS_OF_WEEK)
     order = models.IntegerField(unique=True)
 
+    
 class RecipePlan(models.Model):
     MEALS = (
         (0,'Śniadanie'),
@@ -43,5 +46,6 @@ class RecipePlan(models.Model):
     plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
     order = models.IntegerField()
     day_name = models.ForeignKey(Dayname, on_delete=models.CASCADE)
+
 
 

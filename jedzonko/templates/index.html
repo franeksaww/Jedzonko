@@ -33,7 +33,7 @@
                     <a class="nav-link" href="#about">o aplikacji</a>
                 </li>
                 <li class="nav-item ml-4">
-                    <a class="nav-link disabled" href="recipes.html">Przepisy</a>
+                    <a class="nav-link disabled" href="/recipe/list/">Przepisy</a>
                 </li>
                 <li class="nav-item ml-4">
                     <a class="nav-link disabled" href="#contact">Kontakt</a>
@@ -48,27 +48,24 @@
                 <div class="carousel-item active">
                     <div class="container w-75 d-flex">
                         <div class="carousel-caption d-block">
-                            <h1>Lorem ipsum dolor sit amet</h1>
-                            <h3> consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                                magna aliqua.</h3>
+                            <h1>{{ recipe_2.name}}</h1>
+                            <h3> {{ recipe_2.description }}</h3>
                         </div>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <div class="container w-75 d-flex">
                         <div class="carousel-caption d-block">
-                            <h1>Torem ipsum dolor sit amet</h1>
-                            <h3> consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                                magna aliqua.</h3>
+                            <h1> {{ recipe_3.name }}</h1>
+                            <h3> {{ recipe_3.description }}</h3>
                         </div>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <div class="container w-75 d-flex">
                         <div class="carousel-caption d-block">
-                            <h1>Borem ipsum dolor sit amet</h1>
-                            <h3> consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                                magna aliqua.</h3>
+                            <h1>{{ recipe_1.name }}</h1>
+                            <h3> {{ recipe_1.description }}</h3>
                         </div>
                     </div>
                 </div>
