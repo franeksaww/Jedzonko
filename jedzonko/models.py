@@ -15,7 +15,7 @@ class Recipe(models.Model):
 class Plan(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
-    created = models.DateTimeField(default=timezone.now)
+    created = models.DateTimeField(auto_now_add=True, null=True)
     recipes = models.ManyToManyField(Recipe,through="RecipePlan")
 
     

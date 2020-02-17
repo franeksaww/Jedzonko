@@ -33,7 +33,9 @@ class DashboardView(View):
     def get(self, request):
         recipes_count = Recipe.objects.count()
         recipes_count = str(recipes_count)
-        return render(request, "dashboard.html", {'recipes_count': recipes_count})
+        plans_count = Plan.objects.count()
+        plans_count = str(plans_count)
+        return render(request, "dashboard.html", {'recipes_count': recipes_count, 'plans_count': plans_count})
 
 
 class RecipeList(View):
@@ -91,7 +93,16 @@ class PlanDetails(View):
 
 class PlanAdd(View):
     def get(self, request):
-        return render(request, 'blank.html')
+        return render(request, 'app-add-schedules.html')
+
+    def post(self, request):
+        name = request.POST.get('planName')
+        description = request.POST.get('planDescription')
+        if name and description:
+            Plan.objects.create(name=name, description=description)
+            return redirect('/plan/list/')
+        else:
+            return HttpResponse("Uzupełnij dane")
 
 
 class PlanAddRecipe(View):
