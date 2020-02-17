@@ -6,8 +6,7 @@ from random import shuffle
 import time
 from django.shortcuts import render
 from django.views import View
-
-from jedzonko.models import Recipe
+from jedzonko.models import *
 
 
 class IndexView(View):
@@ -31,7 +30,9 @@ class NewIndexView(View):
 class DashboardView(View):
 
     def get(self, request):
-        return render(request, "dashboard.html")
+        recipes_count = Recipe.objects.count()
+        recipes_count = str(recipes_count)
+        return render(request, "dashboard.html", {'recipes_count': recipes_count})
 
 
 class RecipeList(View):
