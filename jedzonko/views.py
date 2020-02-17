@@ -7,6 +7,7 @@ import time
 from django.shortcuts import render
 from django.views import View
 from jedzonko.models import *
+from django.core.paginator import Paginator
 
 
 class IndexView(View):
@@ -38,8 +39,11 @@ class DashboardView(View):
 class RecipeList(View):
 
     def get(self, request):
-        return render(request, "app-recipes.html")
-
+        recipes_list = Recipe.objects.all().order_by('-votes', '-created')
+        paginator = Paginator(recipes_list, 50)
+        page = request.GET.get('page')
+        recipes = paginator.get_page(page)
+        return render(request, "app-recipes.html", {"recipes": recipes})
 
 class AddRecipe(View):
     def get(self, request):
