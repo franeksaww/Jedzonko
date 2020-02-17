@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Recipe(models.Model):
     name = models.CharField(max_length=128)
     ingredients = models.TextField()
@@ -9,5 +10,3 @@ class Recipe(models.Model):
     preparation_time = models.IntegerField(null=True)
     votes = models.IntegerField(default=0)
 
-
-# Create your models here.
