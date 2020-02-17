@@ -22,10 +22,10 @@ class NewIndexView(View):
     def get(self, request):
         coupon_items = list(Recipe.objects.all())
         shuffle(coupon_items)
-        recipe_1 = coupon_items[0]
-        recipe_2 = coupon_items[1]
-        recipe_3 = coupon_items[2]
-        return render(request, "index.html", {'recipe_1': recipe_1, 'recipe_2': recipe_2, 'recipe_3': recipe_3})
+        one = coupon_items[0]
+        two = coupon_items[1]
+        three = coupon_items[2]
+        return render(request, "index.html", {'one': one, 'two': two, 'three': three})
 
 
 class DashboardView(View):
@@ -67,3 +67,34 @@ class AddRecipe(View):
         else:
             request.session['wrong_data'] = True
             return redirect('/recipe/add/')
+
+
+class RecipeDetails(View):
+    def get(self, request):
+        return render(request, 'blank.html')
+
+
+class RecipeEdit(View):
+    def get(self, request):
+        return render(request, 'blank.html')
+
+
+class PlanDetails(View):
+    def get(self, request):
+        return render(request, 'blank.html')
+
+
+class PlanAdd(View):
+    def get(self, request):
+        return render(request, 'blank.html')
+
+
+class PlanAddRecipe(View):
+    def get(self, request):
+        return render(request, 'blank.html')
+
+
+class PlanList(View):
+    def get(self, request):
+        return render(request, 'blank.html')
+
