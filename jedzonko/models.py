@@ -16,35 +16,34 @@ class Plan(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     created = models.DateTimeField(auto_now_add=True, null=True)
-    recipes = models.ManyToManyField(Recipe,through="RecipePlan")
+    recipes = models.ManyToManyField(Recipe, through="RecipePlan")
 
     
 class Dayname(models.Model):
     DAYS_OF_WEEK = (
-        (0, 'Monday'),
-        (1, 'Tuesday'),
-        (2, 'Wednesday'),
-        (3, 'Thursday'),
-        (4, 'Friday'),
-        (5, 'Saturday'),
-        (6, 'Sunday'),
+        (0, 'Poniedziałek'),
+        (1, 'Wtorek'),
+        (2, 'Środa'),
+        (3, 'Czwartek'),
+        (4, 'Piątek'),
+        (5, 'Sobota'),
+        (6, 'Niedziela'),
     )
-    name = models.CharField(max_length=16,choices=DAYS_OF_WEEK)
-    order = models.IntegerField(unique=True)
+    name = models.IntegerField(choices=DAYS_OF_WEEK)
+    order = models.IntegerField()
 
     
 class RecipePlan(models.Model):
     MEALS = (
-        (0,'Śniadanie'),
-        (1,'Drugie śniadanie'),
-        (2,'Obiad'),
-        (3,'Podwieczorek'),
-        (4,'Kolacja'),
+        (0, 'Śniadanie'),
+        (1, 'Drugie śniadanie'),
+        (2, 'Obiad'),
+        (3, 'Podwieczorek'),
+        (4, 'Kolacja'),
     )
-    meal_name = models.CharField(max_length=255, choices=MEALS)
+    meal_name = models.IntegerField(choices=MEALS)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
-    order = models.IntegerField()
     day_name = models.ForeignKey(Dayname, on_delete=models.CASCADE)
 
 
