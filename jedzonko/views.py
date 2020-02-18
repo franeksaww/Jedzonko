@@ -227,3 +227,6 @@ class Contact(View):
         except Exception:
             link_contact = None
         return render(request, 'contact.html', {'link_contact': link_contact, 'link_about': link_about})
+
+
+"""Z na stronie listy przepisów, należy dodać działający link do strony głównej aplikacji: /main/"""
