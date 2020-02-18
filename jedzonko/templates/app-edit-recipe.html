@@ -7,11 +7,17 @@
         <div class="row border-bottom border-3">
             <div class="col"><h3 class="color-header text-uppercase">Edycja
                 przepisu</h3></div>
+            {% if wrong_data %}
+            <div class="col"><h3 class="color-header text-uppercase">
+                Wpisz poprawne dane!
+            </h3></div>
+            {% endif %}
             <div class="col d-flex justify-content-end mb-2">
+                <form action="" method="post" id="editRecipe">{% csrf_token %}
                 <button type="submit"
                         class="btn btn-color rounded-0 pt-0 pb-0 pr-4 pl-4">
                     Zapisz
-                </button>
+                </button></form>
             </div>
         </div>
 
@@ -20,18 +26,21 @@
             <tr class="d-flex">
                 <th scope="row" class="col-2">Nazwa Przepisu</th>
                 <td class="col-7">
-                    <input class="w-100 p-1" value="z ziemniakami i brukselką">
-                </td>
-            </tr>
-            <tr class="d-flex">
-                <th scope="row" class="col-2">Opis przepisu</th>
-                <td class="col-7"><textarea class="w-100 p-1" rows="5">Mamusina najlepsza zapiekanka pod słońcem. Można ją podać jako główne danie albo jako kolację. W zapiekance możesz użyć również kiełbasy paprykowej sprawi ona, że zapiekanka będzie ostrzejsza w smaku. Zgodnie z zalecanimi Makłowicza, podawać z dobrze dobranym winkiem ;)</textarea>
+                    <input class="w-100 p-1"
+                           value="{{recipe.name}}"
+                            form="editRecipe"
+                            name="name">
                 </td>
             </tr>
             <tr class="d-flex">
                 <th scope="row" class="col-2">Przygotowani(minuty)</th>
                 <td class="col-3">
-                    <input class="p-1" type="number" value="45">
+                    <input class="p-1"
+                           type="number"
+                           min="0"
+                           form="editRecipe"
+                           name="preparation_time"
+                           value="{{recipe.preparation_time}}">
                 </td>
             </tr>
             </tbody>
@@ -46,22 +55,18 @@
         </div>
         <div class="row d-flex">
             <div class="col-5 p-4">
-                <textarea class="w-100 p-1" rows="10">Po tym czasie ziemniaki zalej śmietaną wymieszaną z Knorr Naturalnie smaczne, dodaj liście brukselki i dokładnie wymieszaj.</textarea>
+                <textarea class="w-100 p-1"
+                          rows="10"
+                          name="description"
+                          form="editRecipe">{{recipe.description}}</textarea>
             </div>
             <div class="col-2"></div>
 
             <div class="col-5 p-4">
-                                    <textarea class="w-100 p-1" rows="10">
-    brukselka 300g
-    ziemniaki 500g                             
-    Fix Naturalnie makaronowa z szynką Knorr 1 szt.                              
-    średnia cebula 1szt.                                
-    ząbek czosnku 1szt.                              
-    kiełbasa np. śląska 500g                               
-    śmietana 18% 200 ml
-    Rama Smaż jak szef kuchni, wariant klasyczny 4 łyżki
-    gałązka tymianku 1 szt.
-                                    </textarea>
+                <textarea class="w-100 p-1"
+                          rows="10"
+                          name="ingredients"
+                          form="editRecipe">{{recipe.ingredients}}</textarea>
             </div>
         </div>
     </div>

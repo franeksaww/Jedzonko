@@ -77,7 +77,7 @@ class AddRecipe(View):
 class RecipeDetails(View):
     def get(self, request, id):
         recipe = get_object_or_404(Recipe, pk= id)
-        return render(request, 'app-recipe-details.html', {"recipe": recipe})
+        return render(request, 'app-recipe-details.html', {"recipe": recipe })
 
     def post(self, request, id):
         recipe = get_object_or_404(Recipe, pk=id)
@@ -91,8 +91,33 @@ class RecipeDetails(View):
 
 
 class RecipeEdit(View):
-    def get(self, request):
-        return render(request, 'blank.html')
+    def get(self, request, id):
+        wrong_data = False
+        if request.session.get('wrong_data') is not None:
+            wrong_data = request.session.get('wrong_data')
+            del request.session['wrong_data']
+        recipe = get_object_or_404(Recipe, pk=id)
+        return render(request, 'app-edit-recipe.html', {"recipe": recipe, 'wrong_data': wrong_data})
+
+    def post(self, request, id):
+        name = request.POST.get('name')
+        ingredients = request.POST.get('ingredients')
+        description = request.POST.get('description')
+        preparation_time = 0
+        if request.POST.get('preparation_time') != '':
+            preparation_time = int(request.POST.get('preparation_time'))
+        if name != '' \
+                and ingredients != '' \
+                and description != '' \
+                and preparation_time != 0:
+            Recipe.objects.create(name=name,
+                                  ingredients=ingredients,
+                                  description=description,
+                                  preparation_time=preparation_time)
+            return redirect('/recipe/list/')
+        else:
+            request.session['wrong_data'] = True
+            return redirect(f'/recipe/modify/{id}/')
 
 
 class PlanDetails(View):

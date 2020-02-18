@@ -10,7 +10,7 @@ urlpatterns = [
     path('', NewIndexView.as_view()),
     re_path('recipe/(?P<id>[0-9]*)/$', RecipeDetails.as_view()),
     path('recipe/list/', RecipeList.as_view()),
-    path('recipe/modify/<id>/', RecipeEdit.as_view()),
+    path('recipe/modify/<int:id>/', RecipeEdit.as_view()),
     path('recipe/add/', AddRecipe.as_view()),
     path('main/', DashboardView.as_view()),
     re_path('plan/(?P<id>[0-9]*)/$', PlanDetails.as_view()),
