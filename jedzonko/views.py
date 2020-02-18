@@ -20,12 +20,14 @@ class IndexView(View):
 class NewIndexView(View):
 
     def get(self, request):
-        coupon_items = list(Recipe.objects.all())
-        shuffle(coupon_items)
-        one = coupon_items[0]
-        two = coupon_items[1]
-        three = coupon_items[2]
-        return render(request, "index.html", {'one': one, 'two': two, 'three': three})
+        recipe_items = list(Recipe.objects.all())
+        shuffle(recipe_items)
+        one = recipe_items[0]
+        two = recipe_items[1]
+        three = recipe_items[2]
+        plans = Plan.objects.all().order_by('-created')
+        newest_plan = plans[0]
+        return render(request, "index.html", {'one': one, 'two': two, 'three': three, 'newest_plan': newest_plan})
 
 
 class DashboardView(View):
@@ -123,7 +125,7 @@ class RecipeEdit(View):
 
 
 class PlanDetails(View):
-    def get(self, request):
+    def get(self, request, id):
         return render(request, 'blank.html')
 
 
