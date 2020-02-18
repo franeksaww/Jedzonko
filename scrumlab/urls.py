@@ -16,5 +16,5 @@ urlpatterns = [
     re_path('plan/(?P<id>[0-9]*)/$', PlanDetails.as_view()),
     path('plan/add/', PlanAdd.as_view()),
     path('plan/add-recipe/', PlanAddRecipe.as_view()),
-    path('plan/list/', PlanList.as_view())
+    path('plan/list/', PlanList.as_view()),
 ]
