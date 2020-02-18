@@ -49,6 +49,7 @@ class RecipeList(View):
         recipes = paginator.get_page(page)
         return render(request, "app-recipes.html", {"recipes": recipes})
 
+
 class AddRecipe(View):
     def get(self, request):
         wrong_data = False
@@ -145,7 +146,42 @@ class PlanAdd(View):
 
 class PlanAddRecipe(View):
     def get(self, request):
-        return render(request, 'blank.html')
+        recipes = Recipe.objects.all()
+        plans = Plan.objects.all()
+        days = Dayname.DAYS_OF_WEEK
+        meal_names = RecipePlan.MEALS
+        number_exsist = False
+        if request.session.get('number_exsist') is not None:
+            number_exsist = request.session.get('number_exsist')
+            del request.session['number_exsist']
+        return render(request,
+                      'app-schedules-meal-recipe.html',
+                      {"recipes": recipes,
+                       "plans": plans,
+                       "days": days,
+                       "meal_names": meal_names,
+                       "number_exsist": number_exsist})
+
+    def post(self, request):
+        meal_id = int(request.POST.get('meal_id'))
+        plan_id = request.POST.get('plan_id')
+        recipe_id = request.POST.get('recipe_id')
+        day = int(request.POST.get('day'))
+        number = int(request.POST.get('meal_number'))
+        try:
+            day_obj = Dayname.objects.get(name=day, order=number)
+        except Dayname.DoesNotExist:
+            day_obj = Dayname.objects.create(name=day, order=number)
+        try:
+            recipe_plan_obj = RecipePlan.objects.get(plan_id=plan_id, day_name_id=day_obj.id)
+            request.session['number_exsist'] = True
+            return redirect('/plan/add-recipe/')
+        except RecipePlan.DoesNotExist:
+            RecipePlan.objects.create(meal_name=meal_id,
+                                      plan_id=plan_id,
+                                      recipe_id=recipe_id,
+                                      day_name_id=day_obj.id)
+            return redirect('/plan/list/')
 
 
 class PlanList(View):
