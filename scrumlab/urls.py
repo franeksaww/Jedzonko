@@ -17,4 +17,6 @@ urlpatterns = [
     path('plan/add/', PlanAdd.as_view()),
     path('plan/add-recipe/', PlanAddRecipe.as_view()),
     path('plan/list/', PlanList.as_view()),
+    path('about/', About.as_view()),
+    path(f'contact/', Contact.as_view())
 ]

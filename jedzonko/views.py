@@ -27,7 +27,15 @@ class NewIndexView(View):
         three = recipe_items[2]
         plans = Plan.objects.all().order_by('-created')
         newest_plan = plans[0]
-        return render(request, "index.html", {'one': one, 'two': two, 'three': three, 'newest_plan': newest_plan})
+        try:
+            link_about = Page.objects.get(title='about')
+        except Exception:
+            link_about = None
+        try:
+            link_contact = Page.objects.get(title='contact')
+        except Exception:
+            link_contact = None
+        return render(request, "index.html", {'one': one, 'two': two, 'three': three, 'newest_plan': newest_plan, 'link_about': link_about, 'link_contact': link_contact})
 
 
 class DashboardView(View):
@@ -192,3 +200,30 @@ class PlanList(View):
         plans = paginator.get_page(page)
         return render(request, "app-schedules.html", {"plans": plans})
 
+
+class About(View):
+
+    def get(self, request):
+        try:
+            link_about = Page.objects.get(title='about')
+        except Exception:
+            link_about = None
+        try:
+            link_contact = Page.objects.get(title='contact')
+        except Exception:
+            link_contact = None
+        return render(request, 'about.html', {'link_contact': link_contact, 'link_about': link_about})
+
+
+class Contact(View):
+
+    def get(self, request):
+        try:
+            link_about = Page.objects.get(title='about')
+        except Exception:
+            link_about = None
+        try:
+            link_contact = Page.objects.get(title='contact')
+        except Exception:
+            link_contact = None
+        return render(request, 'contact.html', {'link_contact': link_contact, 'link_about': link_about})
