@@ -4,7 +4,7 @@ from datetime import datetime
 from django.shortcuts import render, HttpResponse, redirect
 from random import shuffle
 import time
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views import View
 from jedzonko.models import *
 from django.core.paginator import Paginator
@@ -77,8 +77,19 @@ class AddRecipe(View):
 
 
 class RecipeDetails(View):
-    def get(self, request):
-        return render(request, 'blank.html')
+    def get(self, request, id):
+        recipe = get_object_or_404(Recipe, pk= id)
+        return render(request, 'app-recipe-details.html', {"recipe": recipe})
+
+    def post(self, request, id):
+        recipe = get_object_or_404(Recipe, pk=id)
+        if 'upvote' in request.POST:
+            recipe.votes += 1
+            recipe.save()
+        elif 'downvote' in request.POST:
+            recipe.votes -= 1
+            recipe.save()
+        return redirect(f'/recipe/{id}')
 
 
 class RecipeEdit(View):
