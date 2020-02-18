@@ -181,7 +181,7 @@ class PlanAddRecipe(View):
                                       plan_id=plan_id,
                                       recipe_id=recipe_id,
                                       day_name_id=day_obj.id)
-            return redirect('/plan/list/')
+            return redirect(f'/plan/{plan_id}/')
 
 
 class PlanList(View):
