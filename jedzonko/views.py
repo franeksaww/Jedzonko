@@ -190,6 +190,7 @@ class PlanAddRecipe(View):
             recipe_plan_obj = RecipePlan.objects.get(plan_id=plan_id, day_name_id=day_obj.id)
             request.session['number_exsist'] = True
             return redirect('/plan/add-recipe/')
+
         except RecipePlan.DoesNotExist:
             RecipePlan.objects.create(meal_name=meal_id,
                                       plan_id=plan_id,
