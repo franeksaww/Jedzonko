@@ -135,14 +135,33 @@ class RecipeEdit(View):
 
 class PlanDetails(View):
     def get(self, request, id):
+        recipe_tab = [[] for _ in range(7)]
+        order_tab = [[] for _ in range(7)]
+        meals_tab = [[] for _ in range(7)]
+        meal_names = RecipePlan.MEALS
+        day_names = Dayname.DAYS_OF_WEEK
         plan = get_object_or_404(Plan, pk=id)
-#        plans = Plan.objects.all()
-#        meal_names = RecipePlan.MEALS
-#        recipe_id = RecipePlan.recipe
-#        day_id = RecipePlan.day_name
-#        plan_id = RecipePlan.plan
-        return render(request, 'app-details-schedules.html', {"plan": plan})
-
+        plan_details = RecipePlan.objects.filter(plan=id)
+        for detail in plan_details:
+            recipe_id = detail.recipe_id
+            day_name_id = detail.day_name.name
+            recipe = Recipe.objects.get(pk=recipe_id)
+            if not recipe_tab[day_name_id]:
+                recipe_tab[day_name_id].append(recipe)
+                order_tab[day_name_id].append(detail.day_name.order)
+                meals_tab[day_name_id].append(detail.meal_name)
+            else:
+                index = 0
+                for i in range(len(recipe_tab[day_name_id])):
+                    if order_tab[day_name_id][i] < detail.day_name.order:
+                        index += 1
+                recipe_tab[day_name_id].insert(index, recipe)
+                order_tab[day_name_id].insert(index, detail.day_name.order)
+                meals_tab[day_name_id].insert(index, detail.meal_name)
+        return render(request,
+                      'app-details-schedules.html',
+                      {"plan": plan, "meals_tab": meals_tab, "recipe_tab": recipe_tab,"meal_names":meal_names, "day_names":day_names}
+                      )
 
 class PlanAdd(View):
     def get(self, request):
