@@ -135,7 +135,13 @@ class RecipeEdit(View):
 
 class PlanDetails(View):
     def get(self, request, id):
-        return render(request, 'blank.html')
+        plan = get_object_or_404(Plan, pk=id)
+#        plans = Plan.objects.all()
+#        meal_names = RecipePlan.MEALS
+#        recipe_id = RecipePlan.recipe
+#        day_id = RecipePlan.day_name
+#        plan_id = RecipePlan.plan
+        return render(request, 'app-details-schedules.html', {"plan": plan})
 
 
 class PlanAdd(View):
