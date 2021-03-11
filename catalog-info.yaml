@@ -13,6 +13,7 @@ metadata:
     github.com/project-slug: franeksaww/Jedzonko
     backstage.io/techdocs-ref: url:https://github.com/franeksaww/Jedzonko
     lighthouse.com/website-url: https://sport.pl
+    jenkins.io/github-folder: 'folder-name/project-name'
 spec:
   type: library
   owner: CNCF
