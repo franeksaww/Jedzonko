@@ -1,0 +1,19 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: Jedzonko
+  description: |
+    Jedznonko test
+  links:
+    - title: Website
+      url: https://sport.pl
+    - title: Documentation
+      url: https://en.wikipedia.org/wiki/Main_Page
+  annotations:
+    github.com/project-slug: franeksaww/Jedzonko
+    backstage.io/techdocs-ref: url:https://github.com/franeksaww/Jedzonko
+    lighthouse.com/website-url: https://sport.pl
+spec:
+  type: library
+  owner: CNCF
+  lifecycle: experimental
